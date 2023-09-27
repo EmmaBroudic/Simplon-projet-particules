@@ -16,8 +16,8 @@ let radius = 25;
 let x = radius;
 let y = radius;
 
-// declare an opacityvalue and a boolean value used with function updatePurpleOpacity()
-let purpleOpacity = 0.1;
+// declare an opacityvalue and a boolean value used with function updateOpacityDot()
+let opacityDot = 0.1;
 let increasing = true;
 
 // declare a boolean value and variables used with addEventListener
@@ -108,22 +108,22 @@ function heartShape() {
 
 
 // Function to modify opacity
-function updatePurpleOpacity() {
+function updateOpacityDot() {
     if (increasing) {
-        purpleOpacity += 0.1;
-        if (purpleOpacity >= 1) {
+        opacityDot += 0.05;
+        if (opacityDot >= 1) {
             increasing = false;
         }
     } else {
-        purpleOpacity -= 0.1;
-        if (purpleOpacity <= 0) {
+        opacityDot -= 0.05;
+        if (opacityDot <= 0) {
             increasing = true;
         }
     }
 }
 
 // Call the opacity update function at regular intervals
-setInterval(updatePurpleOpacity, 1000);
+setInterval(updateOpacityDot, 1000);
 
 // Create a function that generates random coordinates
 function getRandomCoordinates() {
@@ -169,7 +169,7 @@ function animateOne() {
     y += speedY * 1.5;
     
     // change opacity of the dots
-    ctx.globalAlpha = purpleOpacity;
+    ctx.globalAlpha = opacityDot;
 
     // if value of coordinate x is superior to the width of the screen -> change the value of x
     if (x > width - radius) {
@@ -186,6 +186,8 @@ function animateOne() {
     purpleDots(width -x, height - radius);
     purpleDots((width - radius), y);
     purpleDots(radius, height - y);
+
+    const previousGlobalAlpha = ctx.globalAlpha;
     
     // a condition triggered by a mouse click
     if (isDoubleSize) {
@@ -205,6 +207,7 @@ function animateOne() {
         //if (coordinatesArray.length <= 1000) {
             for (const coordinates of coordinatesArray) {
                 pinkDots(coordinates.randomNumberX, coordinates.randomNumberY);
+                ctx.globalAlpha = previousGlobalAlpha;
             }
         //}
 
@@ -221,6 +224,7 @@ function animateOne() {
         radius = 25;
     }
 
+    ctx.globalAlpha = previousGlobalAlpha;
     //create a pink dots that follow mouse cursor
     pinkDots(xMouse, yMouse);
     
