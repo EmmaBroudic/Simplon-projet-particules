@@ -12,7 +12,7 @@ const coordinatesArray: { x: number, y: number }[] = [];
 
 // declare variables
 // declare a radius and coordinates
-let radius = 50;
+let radius = 25;
 let x = radius;
 let y = radius;
 
@@ -24,6 +24,8 @@ let increasing = true;
 let isDoubleSize = false;
 let xMouse: number;
 let yMouse: number;
+
+let heartSize = 3;
 
 // colored screen functions
 
@@ -79,18 +81,21 @@ function heartShape() {
     const centerY = height / 2;
 
     // declare constants values
-    const valueOne = 30;
-    const valueTwo = 40;
-    const valueThree = 15;
-    const valueFour = 70;
-    const valueFive = 45;
-    const valueSix = 75;
-    const valueSeven = 80;
-    const valueEight = 20;
+   let { valueOne, valueTwo, valueThree, valueFour, valueFive, valueSix, valueSeven, valueEight } = {
+        valueOne: 30 * heartSize,
+        valueTwo: 40 * heartSize,
+        valueThree: 15 * heartSize,
+        valueFour: 70 * heartSize,
+        valueFive: 45 * heartSize,
+        valueSix: 75 * heartSize,
+        valueSeven: 80 * heartSize,
+        valueEight: 20 * heartSize,
+    };
 
     // draw heart shape
     ctx.beginPath();
     ctx.moveTo(centerX, centerY - valueOne);
+    //console.log(centerX, centerY - valueTwo, centerX - valueThree, centerY - valueFour, centerX - valueFive, centerY - valueFour);
     ctx.bezierCurveTo(centerX, centerY - valueTwo, centerX - valueThree, centerY - valueFour, centerX - valueFive, centerY - valueFour); // Ajustez les coordonnées en fonction du centre
     ctx.bezierCurveTo(centerX - valueSix, centerY - valueFour, centerX - valueSix, centerY - valueTwo, centerX - valueSix, centerY - valueTwo);
     ctx.bezierCurveTo(centerX - valueSix, centerY + valueEight, centerX, centerY + valueSeven, centerX, centerY + valueSeven);
@@ -186,7 +191,7 @@ function animateOne() {
     if (isDoubleSize) {
 
         // change radius of dots
-        radius = 170;
+        radius = 50;
         // opacity to max
         ctx.globalAlpha = 1;
 
@@ -197,16 +202,23 @@ function animateOne() {
         coordinatesArray.push(coordinates);
 
         // call pink dots with random coordinates
-        if (coordinatesArray.length <= 150) {
+        //if (coordinatesArray.length <= 1000) {
             for (const coordinates of coordinatesArray) {
                 pinkDots(coordinates.randomNumberX, coordinates.randomNumberY);
             }
+        //}
+
+
+        heartSize += 0.05;
+
+        if (heartSize > 4) {
+            heartSize = 1;
         }
 
-        // draw a heart shape
         heartShape();
+
     } else {
-        radius = 50;
+        radius = 25;
     }
 
     //create a pink dots that follow mouse cursor
