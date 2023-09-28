@@ -61,7 +61,7 @@ function purpleDots(x: number, y: number): { x: number, y: number } {
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    return { x, y };
+    return { x, y }; // Axel : Pourquoi retourner les valeurs d'entrée?
 }
 
 // Function to create pink dots with coordinates x and y
@@ -71,7 +71,7 @@ function pinkDots(x: number, y: number): { x: number, y: number } {
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    return { x, y };
+    return { x, y }; // Axel : Pourquoi retourner les valeurs d'entrée?
 }
 
 // Function to create a red heart shape
@@ -90,7 +90,7 @@ function heartShape() {
         valueSix: 75 * heartSize,
         valueSeven: 80 * heartSize,
         valueEight: 20 * heartSize,
-    };
+    }; // Axel : "Position" aurait peut être été un nom de variable plus clair. J'aurai nommé pos1, etc.
 
     // draw heart shape
     ctx.beginPath();
@@ -120,7 +120,7 @@ function updateOpacityDot() {
             increasing = true;
         }
     }
-}
+} // ERIC : cette fonction peut être reduite à 3 ligne en utilisant * -1
 
 // Call the opacity update function at regular intervals
 setInterval(updateOpacityDot, 1000);
@@ -136,6 +136,10 @@ function getRandomCoordinates() {
     let maxY = Math.floor(height);
     let randomNumberY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
     // return coordinates
+    // Axel : C'est peut être moins clair, mais on peut le faire en beaucoup moins de lignes :
+    // let randomNumberX = Math.random()*width;
+    // let randomNumbery = Math.random()*height;
+    // Ou simplement : return {Math.random()*width, Math.random()*height}; en une ligne.
     return { randomNumberX, randomNumberY };
 }
 
@@ -190,8 +194,8 @@ function animateOne() {
     const previousGlobalAlpha = ctx.globalAlpha;
     
     // a condition triggered by a mouse click
-    if (isDoubleSize) {
-
+    if (isDoubleSize) { // Axel : Ptêtre renommer cette variable? Je doute que ce soit l'effet le plus
+                        // important de l'événement du clic.
         // change radius of dots
         radius = 50;
         // opacity to max
@@ -201,15 +205,15 @@ function animateOne() {
         
         // generate randomCoordinates and push them in an array
         const coordinates = getRandomCoordinates();
-        coordinatesArray.push(coordinates);
+        coordinatesArray.push(coordinates);  // Eric : coordinates n'est pas assigné à un type
 
         // call pink dots with random coordinates
-        //if (coordinatesArray.length <= 1000) {
+        if (coordinatesArray.length <= 1000) {
             for (const coordinates of coordinatesArray) {
                 pinkDots(coordinates.randomNumberX, coordinates.randomNumberY);
                 ctx.globalAlpha = previousGlobalAlpha;
             }
-        //}
+        }
 
 
         heartSize += 0.05;
